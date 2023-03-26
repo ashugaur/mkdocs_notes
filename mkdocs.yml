@@ -1,0 +1,505 @@
+# Site info
+site_name: mkdocs_notes
+site_author: AG
+site_url: https://mkdocs_notes.com/
+
+
+# Appearance
+# https://github.com/mkdocs/mkdocs/wiki/MkDocs-Themes
+theme:
+    name: material
+    custom_dir: theme
+    # custom_dir: overrides
+    palette:
+        # Light mode
+        - media: "(prefers-color-scheme: light)"
+          scheme: default
+          toggle:
+            icon: material/lightbulb
+            name: Switch to dark mode
+          accent: orange
+          primary: white
+        
+        # Dark mode
+        - media: "(prefers-color-scheme: dark)"
+          scheme: slate
+          toggle:
+            icon: material/lightbulb-outline
+            name: Switch to light mode
+          accent: orange
+          primary: black
+
+# Font
+    font:
+        text: Roboto
+        # code: Roboto Mono
+
+# Website logo    
+    # logo: img/magnet.png
+
+# Favicon
+    # favicon: img/magnet.png
+
+    features:
+
+# search
+# https://www.codeinsideout.com/blog/site-setup/create-site-project/#navigation
+# theme:
+#     name: material
+#     features:
+        - search.suggest # display the likeliest completion for the last word
+        - search.highlight # highlight all occurrences
+        - search.share # show a share button
+
+
+# changes the topic name in address bar
+        - navigation.tracking
+
+# loads page fast       
+# https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/
+        - navigation.instant
+
+# enables top-level sections are rendered in a menu layer below the header for viewports above 1220px, but remain as-is on mobile
+        - navigation.tabs
+
+# navigation tabs always visible
+        # - navigation.tabs.sticky
+
+# shows toc sections as open all the time
+        # - navigation.sections
+
+# integrates table of contents to one side
+        # - toc.integrate
+
+# shows back to top button
+        - navigation.top
+
+# all content tabs across the whole documentation site will be linked and switch to the same label where the user is
+        - content.tabs.link
+
+# theme:
+    # icon:
+    #     admonition:
+    #         <type>: <icon> 
+
+# allows anotation within code blocks
+# theme:
+    # features:
+        - content.code.annotate 
+
+# When section index pages are enabled, documents can be directly attached to sections, which is particularly useful for providing overview pages
+        - navigation.indexes
+
+
+# enabled = navigation opens as expanded
+# https://hpcai.tech/setup/setting-up-navigation/#navigation-expansion
+        # - navigation.expand
+
+
+
+# customize admonision icons
+# https://squidfunk.github.io/mkdocs-material/reference/admonitions/#admonition-icons
+# theme:
+    icon:
+        admonition:
+          info: material/code-tags
+          question: material/lock-question
+          todo: fontawesome/solid/question
+
+
+
+
+
+
+# Graphics
+# mermaid support to create diagrams
+markdown_extensions:
+
+# add admonition to toc
+    # - admonition
+
+
+# from chatgpt, does not work: adds toc to .py or .ipynb rendeded files through mkdocs-jupyter
+    # - jupyter
+
+
+# https://squidfunk.github.io/mkdocs-material/reference/images/
+# enables image alignment
+# markdown_extensions:
+    - attr_list
+    - md_in_html
+
+
+# arbitrary nesting of code and content blocks inside each other, including admonitions, tabs, lists and all other elements
+# https://squidfunk.github.io/mkdocs-material/setup/extensions/python-markdown-extensions/#superfences
+    - pymdownx.superfences:
+        custom_fences:
+            - name: mermaid
+              class: mermaid
+              format: !!python/name:pymdownx.superfences.fence_code_format
+
+
+# mkdocs-charts-plugin
+            - name: vegalite
+              class: vegalite
+              format: !!python/name:mkdocs_charts_plugin.fences.fence_vegalite
+
+
+# graphviz extension
+# https://eskool.gitlab.io/mkhack3rs/graphviz/
+# markdown_extensions:
+    # - mkdocs_graphviz
+
+# markdown_extensions:
+#     - mkdocs_graphviz:
+#         light_theme: 000000      # Any HTML Color Name or any HTML Hexadecimal color code WITHOUT the `#` sign
+#         dark_theme: FFFFFF       # Any HTML Color Name or any HTML Hexadecimal color code WITHOUT the `#` sign
+#         color: 789ABC            # Any HTML Color Name or any HTML Hexadecimal color code WITHOUT the `#` sign
+#         bgcolor: none            # Any HTML Color Name or any HTML Hexadecimal color code WITHOUT the `#` sign
+#         graph_color: 789ABC      # Any HTML Color Name or any HTML Hexadecimal color code WITHOUT the `#` sign
+#         graph_fontcolor: 789ABC  # Any HTML Color Name or any HTML Hexadecimal color code WITHOUT the `#` sign
+#         node_color: 789ABC       # Any HTML Color Name or any HTML Hexadecimal color code WITHOUT the `#` sign
+#         node_fontcolor: 789ABC   # Any HTML Color Name or any HTML Hexadecimal color code WITHOUT the `#` sign
+#         edge_color: 789ABC       # Any HTML Color Name or any HTML Hexadecimal color code WITHOUT the `#` sign
+#         edge_fontcolor: 789ABC   # Any HTML Color Name or any HTML Hexadecimal color code WITHOUT the `#` sign
+
+
+# math
+# https://squidfunk.github.io/mkdocs-material/reference/mathjax/
+# conda install -c conda-forge pymdown-extensions
+# markdown_extensions:
+    - pymdownx.arithmatex:
+        generic: true
+
+
+# https://squidfunk.github.io/mkdocs-material/reference/code-blocks/
+# conda install -c conda-forge pygments
+# code block highlighting        
+    - pymdownx.highlight:
+        anchor_linenums: true
+    - pymdownx.inlinehilite
+
+# attach external files
+# https://squidfunk.github.io/mkdocs-material/reference/code-blocks/#embedding-external-files
+# https://facelessuser.github.io/pymdown-extensions/extensions/snippets/#snippets-notation
+    - pymdownx.snippets
+
+# admonitions
+    - admonition
+    - pymdownx.details
+    # - pymdownx.superfences
+# tabs for comparison, code blocks
+    - pymdownx.tabbed:
+        alternate_style: true
+
+# list & checkbox style change
+    - def_list
+    - pymdownx.tasklist:
+        custom_checkbox: true
+
+    - footnotes
+
+# text formatting
+
+# markdown_extensions:
+    - pymdownx.critic
+    - pymdownx.caret
+    - pymdownx.keys
+    - pymdownx.mark
+    - pymdownx.tilde
+
+# tooltips
+    - abbr
+    # - attr_list
+    - pymdownx.snippets
+
+# Icons, Emojis
+# https://squidfunk.github.io/mkdocs-material/reference/icons-emojis/
+# markdown_extensions:
+    - attr_list
+    - pymdownx.emoji:
+        emoji_index: !!python/name:materialx.emoji.twemoji
+        emoji_generator: !!python/name:materialx.emoji.to_svg
+
+# markdown_extensions: 
+  # - attr_list
+    - md_in_html
+
+
+# table support
+# https://squidfunk.github.io/mkdocs-material/reference/data-tables/#configuration
+# markdown_extensions:
+    - tables
+
+
+# hides toc navigation for a particular file
+# https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/#hiding-the-sidebars
+    - meta
+
+
+# enable or disable display of toc levels by choosing 0
+    - toc:
+        # sets the title of the table of contents in the right navigation sidebar
+        title: Table of contents
+        # adds an anchor link containing the paragraph symbol ¶ or another custom symbol at the end of each headline
+        #permalink: true
+        permalink: '#'
+# add admonition to toc
+        toc_depth: 5
+        baselevel: 1
+
+
+
+# does not work
+    # - codehilite:
+    #     use_pygments: false
+    #     guess_lang: false
+    #     noclasses: true
+    #     pygments_style: friendly
+    #     linenums: true
+    #     title: true
+
+
+    # - pymdownx.betterem:
+    #     smart_enable: all
+    # - pymdownx.caret
+    # - pymdownx.critic
+    # - pymdownx.details
+    # - pymdownx.emoji:
+    #     emoji_generator: !!python/name:pymdownx.emoji.to_svg
+# https://facelessuser.github.io/pymdown-extensions/extensions/inlinehilite/
+    # - pymdownx.inlinehilite
+
+    # enables linking within code block or yaml
+    # https://facelessuser.github.io/pymdown-extensions/extensions/magiclink/
+    # - pymdownx.magiclink
+
+    # - pymdownx.mark
+    # - pymdownx.smartsymbols
+    # - pymdownx.superfences
+    # - pymdownx.tasklist:
+    #     custom_checkbox: true
+    # - pymdownx.tilde
+
+
+# Search
+# # enables offline search
+# # paid plugin
+# plugins:
+#     - offline:
+#         enabled: !ENV [OFFLINE, false]
+
+
+# https://github.com/wilhelmer/mkdocs-localsearch
+plugins:
+
+    # https://squidfunk.github.io/mkdocs-material/reference/images/
+    # https://github.com/blueswen/mkdocs-glightbox#usage
+    # https://blueswen.github.io/mkdocs-glightbox/
+    - glightbox:
+       touchNavigation: true
+       loop: false
+       effect: zoom
+       slide_effect: slide
+       width: 100%
+       height: auto
+       zoomable: true
+       draggable: true
+       skip_classes:
+         - custom-skip-class-name
+       auto_caption: false
+       caption_position: bottom
+
+# Embed excel file
+# https://pypi.org/project/mkdocs-table-reader-plugin/
+# https://timvink.github.io/mkdocs-table-reader-plugin/readers/#read_excel
+    - table-reader
+#        data_path: "docs/tables"
+
+
+# add .py and .ipynb (jupyter notebooks) directly to nav
+# https://github.com/danielfrg/mkdocs-jupyter
+# plugins:
+    # - mkdocs-jupyter:
+    #     theme: dark
+        # execute: True
+        # allow_errors: false
+        # execute_ignore: "my-secret-files/*.ipynb"
+        # kernel_name: python3
+        # include_source: True # show download button + change the html file
+        # ignore_h1_titles: True
+
+        # show/hide code
+        # show_input: False
+
+        # show/hide output
+        # no_input: True
+
+        # include: ["*.ipynb"]  # Default: ["*.py", "*.ipynb"]
+        # ignore: ["some-irrelevant-files/*.ipynb"]
+
+
+
+# https://pypi.org/project/mkdocs-video/
+    - mkdocs-video:
+        # is_video: True
+        # video_autoplay: True
+        css_style:
+          width: "30%"
+          height: "22.172vw"
+
+    - search
+    - localsearch
+    # - awesome-pages # order items in navbar using .pages
+
+
+# https://github.com/mkdocs/mkdocs/discussions/2967
+# plugins:
+    # - mkdocs-simple-hooks:
+    #     hooks:
+            # on_files: 'hooks:on_files'
+
+
+
+
+
+
+# testing not positive
+# print site as html, pdf...
+# https://timvink.github.io/mkdocs-print-site-plugin/
+# plugins:
+    # - search
+    # - print-site
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# enable mkdocs-charts-plugin
+    # - charts
+
+# enable kroki diagrams plugin
+# https://github.com/AVATEAM-IT-SYSTEMHAUS/mkdocs-kroki-plugin
+# plugins:
+    # - kroki
+
+
+
+
+# switch off searchbox for offline usage
+# plugins: []
+# plugins:
+#     - search
+# https://github.com/midnightprioriem/mkdocs-autolinks-plugin
+    # - autolinks
+    # - minify
+    #     minify_html: true
+
+
+# Export
+# convert mkdocs to pdf
+# conda install -c programfan mkdocs-with-pdf
+# https://github.com/orzih/mkdocs-with-pdf
+# https://morioh.com/p/31a9b684385a
+# https://pypi.org/project/mkdocs-with-pdf/
+# plugins:
+#     - with-pdf:
+#         author: Ashu
+#         copyright: Internal
+        
+#         cover: true
+#         back_cover: true
+#         cover_title: Σdupunk
+#         cover_subtitle: Σdupunk notes
+#         cover_logo: docs\mkdocs\auhg.jpg
+
+
+# #         # custom_template_path: TEMPLATES PATH
+        
+#         toc_title: Σdupunk site contents
+# #         # heading_shift: false
+#         toc_level: 3
+# #         # ordered_chapter_level: 2
+# #         # excludes_children:
+# #         #     - 'release-notes/:upgrading'
+# #         #     - 'release-notes/:changelog'
+        
+# #         # exclude_pages:
+# #         #     - 'bugs/'
+# #         #     - 'appendix/contribute/'
+#         convert_iframe:
+#             - src: IFRAME SRC
+#               img: POSTER IMAGE URL
+#               text: ALTERNATE TEXT
+#             - src: ...
+# #         # two_columns_level: 3
+
+#         # render_js: true
+#         # headless_chrome_path: headless-chromium
+        
+# #         # output_path: any-place/document.pdf
+#         # enabled_if_env: ENABLE_PDF_EXPORT
+        
+# #         # debug_html: true
+# #         # show_anchors: true
+# #         verbose: false
+
+
+# links pages for offline use
+use_directory_urls: false
+
+
+# Math
+extra_javascript:
+    - assets/javascripts/mathjax.js
+    - https://polyfill.io/v3/polyfill.min.js?features=es6
+    - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+
+
+# enable mkdocs-charts-plugin
+    - https://cdn.jsdelivr.net/npm/vega@5
+    - https://cdn.jsdelivr.net/npm/vega-lite@5
+    - https://cdn.jsdelivr.net/npm/vega-embed@6
+
+
+# enable graphviz extension
+# https://eskool.gitlab.io/mkhack3rs/graphviz/
+# extra_javascript:
+    # - https://cdn.jsdelivr.net/gh/rod2ik/cdn@main/mkdocs/javascripts/mkdocs-graphviz.js
+
+
+# sortable tables
+# https://squidfunk.github.io/mkdocs-material/reference/data-tables/#sortable-tables
+# extra_javascript:
+    - https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js
+    - javascripts/tablesort.js
+
+
+# activate option to add additional text as table of content
+# https://github.com/midnightprioriem/mkdocs-toc-sidebar-plugin
+# plugins:
+    # - search
+    # - toc-sidebar
+
+
+
+# page width
+# https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/#__tabbed_9_2
+extra_css:
+    - stylesheets/extra.css
+
+
+# remove made with mkdocs
+# https://squidfunk.github.io/mkdocs-material/setup/setting-up-the-footer/#generator-notice
+# extra:
+#     generator: false
+
