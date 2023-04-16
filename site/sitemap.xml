@@ -2,12 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://mkdocs_notes.com/index.html</loc>
-         <lastmod>2023-03-26</lastmod>
+         <lastmod>2023-04-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://mkdocs_notes.com/ROC_AUC.html</loc>
-         <lastmod>2023-03-26</lastmod>
+         <loc>https://mkdocs_notes.com/automation/visual%20library.d3blocks.html</loc>
+         <lastmod>2023-04-16</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://mkdocs_notes.com/automation/visual%20library.html</loc>
+         <lastmod>2023-04-16</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://mkdocs_notes.com/automation/visual%20library.plotly.html</loc>
+         <lastmod>2023-04-16</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://mkdocs_notes.com/machine%20learning/roc_auc.html</loc>
+         <lastmod>2023-04-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
