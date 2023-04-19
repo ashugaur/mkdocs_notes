@@ -1,0 +1,63 @@
+#python.exe -m pip install --upgrade pip
+
+# mkdocs, pandocs or markdown
+#pip install --upgrade mkdocs
+mkdocs
+mkdocs-material
+mkdocs-material-extensions
+pymdown-extensions
+mkdocs-localsearch
+mkdocs-graphviz
+#mkdocs-jupyter
+#mkdocs-kroki-plugin
+mkdocs-table-reader-plugin
+mkdocs-video
+Pygments
+mkdocs-charts-plugin
+openpyxl
+xlrd
+#xml_cleaner
+mkdocs-glightbox
+mkdocs-simple-hooks
+
+# does not work on pypi, works for anaconda
+# pandocs
+#pypandoc
+#standalone
+
+
+
+#print site as .html
+mkdocs-print-site-plugin
+HTMLArk
+#http
+html5lib
+requests
+
+
+#print site as .pdf
+mkdocs-with-pdf
+#PyGObject #installation issue
+weasyprint
+
+
+
+# convert from .md to .docx
+#Markdown2docx
+
+# automatic links
+mkdocs-autolinks-plugin
+
+# compress pages
+mkdocs-minify-plugin
+
+
+# number headings
+#mkdocs-add-number-plugin
+mkdocs-enumerate-headings-plugin #works
+
+# run code within markdown
+markdown-exec[ansi]
+
+#mindmaps
+mkdocs-markmap

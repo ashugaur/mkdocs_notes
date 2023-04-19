@@ -1,0 +1,1 @@
+{{ read_excel('docs/tables/mathjax_maths.xlsx', sheet_name='mathjax', engine='openpyxl') }}

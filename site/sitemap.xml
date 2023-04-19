@@ -2,27 +2,107 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://mkdocs_notes.com/index.html</loc>
-         <lastmod>2023-04-16</lastmod>
+         <lastmod>2023-04-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://mkdocs_notes.com/automation/crisp_dm.html</loc>
+         <lastmod>2023-04-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://mkdocs_notes.com/automation/sql.html</loc>
+         <lastmod>2023-04-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mkdocs_notes.com/automation/visual%20library.d3blocks.html</loc>
-         <lastmod>2023-04-16</lastmod>
+         <lastmod>2023-04-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mkdocs_notes.com/automation/visual%20library.html</loc>
-         <lastmod>2023-04-16</lastmod>
+         <lastmod>2023-04-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mkdocs_notes.com/automation/visual%20library.plotly.html</loc>
-         <lastmod>2023-04-16</lastmod>
+         <lastmod>2023-04-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mkdocs_notes.com/machine%20learning/roc_auc.html</loc>
-         <lastmod>2023-04-16</lastmod>
+         <lastmod>2023-04-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://mkdocs_notes.com/machine%20learning/cluster%20analysis/index.html</loc>
+         <lastmod>2023-04-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://mkdocs_notes.com/machine%20learning/text%20mining/index.html</loc>
+         <lastmod>2023-04-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://mkdocs_notes.com/zap/index.html</loc>
+         <lastmod>2023-04-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://mkdocs_notes.com/zap/python.html</loc>
+         <lastmod>2023-04-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://mkdocs_notes.com/zap/vs_code.html</loc>
+         <lastmod>2023-04-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://mkdocs_notes.com/zap/mkdocs/index.html</loc>
+         <lastmod>2023-04-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://mkdocs_notes.com/zap/mkdocs/1_text.html</loc>
+         <lastmod>2023-04-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://mkdocs_notes.com/zap/mkdocs/2_insert.html</loc>
+         <lastmod>2023-04-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://mkdocs_notes.com/zap/mkdocs/3_admonitions.html</loc>
+         <lastmod>2023-04-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://mkdocs_notes.com/zap/mkdocs/4_templates.html</loc>
+         <lastmod>2023-04-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://mkdocs_notes.com/zap/mkdocs/5_html_tags.html</loc>
+         <lastmod>2023-04-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://mkdocs_notes.com/zap/mkdocs/6_glyphs.html</loc>
+         <lastmod>2023-04-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://mkdocs_notes.com/zap/mkdocs/7_glightbox.html</loc>
+         <lastmod>2023-04-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://mkdocs_notes.com/zap/mkdocs/8_settings.html</loc>
+         <lastmod>2023-04-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
