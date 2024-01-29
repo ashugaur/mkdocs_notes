@@ -1554,7 +1554,7 @@ def lookup_category_group_order(row):
     result_values = []
     seen_words = set()
 
-    for word in re.split(r'\s*[-\+]\s*', category_group_order):  # Use both '-' and '+' as delimiters
+    for word in re.split(r'\s*\+\s*', category_group_order):
         if not pd.isna(word):
             matching_values = next((_animal for _animal in _animals_in_zoo if mapping_dict.get(_animal) == word and word not in seen_words), None)
             if matching_values is not None:
