@@ -1069,3 +1069,107 @@ print("Original DataFrame:")
 print(data_df[['size', 'animals_in_zoo', 'category', 'no_match_flag', 'category_group', 'category_group_ordered', 'category_order', 'target', 'hit']])
 print("\nDataFrame with No Match:")
 print(no_match_df[['size', 'animals_in_zoo']])
+
+
+#%% v20
+
+import pandas as pd
+import numpy as np
+import re
+
+data_df = pd.DataFrame({'size': {0: 'big', 1: 'medium', 2: 'medium', 3: 'medium', 4: 'big', 5: 'big', 6: 'big', 7: 'big', 8: 'big', 9: 'big', 10: 'big', 11: 'medium', 12: 'medium', 13: 'medium', 14: 'medium', 15: 'medium', 16: 'big', 17: 'medium', 18: 'big', 19: 'small', 20: 'small', 21: 'big', 22: 'small'}, 'animals_in_zoo': {0: 'tiger + lion + leopard + bears', 1: 'leopard + platpus + pigeon + crocodile', 2: 'leopard + . + pigeon + crocodile', 3: 'leopard + platpus +   + crocodile', 4: 'crocodile + tigers + beard + platpuses', 5: 'crocodile + tiger + bear + platpus', 6: 'tiger + bear + crocodile + crane', 7: 'tiger + bear + crocodile + crane + tuna', 8: 'lion', 9: 'tunas', 10: 'crane', 11: 'leopard + platpus', 12: 'leopard', 13: 'leopard + platpus + pigeon', 14: 'leopard + platpus + pigeon + mullett', 15: 'mullett', 16: 'tiger + bear + crocodile + crane + tuna + lion', 17: ' ', 18: np.nan, 19: 'sardine + frog', 20: 'frog  +  sardine', 21: 'tiger + bear  + crane + tuna', 22: 'centipede'}})
+
+mapping_dict = {'crocodile': 'amphibian', 'platpus': 'amphibian', 'pigeon': 'bird', 'crane': 'bird', 'tuna': 'fish', 'mullett': 'fish', 'tiger': 'mammal', 'lion': 'mammal', 'leopard': 'mammal', 'bear': 'omnivore', 'frog': 'amphibian', 'sardine': 'fish', 'centipede': 'insect'}
+
+mapping_df = pd.DataFrame({'size': {0: 'big', 1: 'big', 2: 'big', 3: 'big', 4: 'big', 5: 'big', 6: 'big', 7: 'big', 8: 'medium', 9: 'medium', 10: 'medium', 11: 'medium', 12: 'medium', 13: 'medium', 14: 'medium', 15: 'small', 16: 'small'}, 'category_group': {0: 'fish + amphibian + mammal', 1: 'mammal + amphibian', 2: 'mammal + fish', 3: 'mammal', 4: 'fish', 5: 'bird', 6: 'mollusc', 7: 'unknown', 8: 'fish + amphibian + mammal + bird', 9: 'mammal + bird + amphibian', 10: 'mammal + amphibian', 11: 'mammal', 12: 'fish', 13: 'bird', 14: 'unknown', 15: 'fish', 16: 'unknown'}, 'category_group_ordered': {0: 'real big one', 1: 'land or water', 2: 'land and water', 3: 'mammal', 4: 'fish', 5: 'bird', 6: 'snail family', 7: 'complete new', 8: 'fish + amphibian + mammal + bird', 9: 'amphibian + mammal + bird', 10: 'amphibian + mammal', 11: 'mammal', 12: 'fish', 13: 'bird', 14: 'complete new', 15: 'fishes', 16: 'complete new'}, 'category_order': {0: 1, 1: 2, 2: 3, 3: 4, 4: 5, 5: 6, 6: 7, 7: 8, 8: 1, 9: 2, 10: 3, 11: 4, 12: 5, 13: 6, 14: 7, 15: 1, 16: 2}})
+
+# Create a new DataFrame for records with no match
+no_match_df = data_df[data_df['animals_in_zoo'].apply(lambda x: isinstance(x, str) and any(animal not in mapping_dict for animal in re.split(r'\s*\+\s*', x)))]
+
+# Flag records with no match as 1 in the original DataFrame
+data_df['no_match_flag'] = data_df['animals_in_zoo'].apply(lambda x: 1 if ((isinstance(x, str) and any(animal not in mapping_dict for animal in re.split(r'\s*\+\s*', x)))) or (pd.isna(x)) else 0)
+
+# Function to look up the category for each animal in the 'animals_in_zoo' column
+def get_category(animal_list):
+    unique_categories = []
+    seen_categories = set()
+    for animal in animal_list:
+        category = mapping_dict.get(animal)
+        if category and category not in seen_categories:
+            seen_categories.add(category)
+            unique_categories.append(category)
+    return ' + '.join(unique_categories) if unique_categories else None
+
+# Apply the function to create a new 'category' column in the original data
+data_df['category'] = data_df.apply(lambda row: get_category(re.split(r'\s*\+\s*', str(row['animals_in_zoo'])) if (isinstance(row['animals_in_zoo'], str)) else []), axis=1)
+
+# Apply the function to create new 'category_group_ordered', 'category_order', and 'category_group' columns in the original data
+def lookup_category_group(row):
+    no_match_flag = row['no_match_flag']
+    size = row['size']
+    category = row['category']
+
+    if no_match_flag == 1 or pd.isna(category):
+        unknown_row = mapping_df[(mapping_df['size'] == size) & (mapping_df['category_group'] == 'unknown')].iloc[0]
+        return 'unknown', 'complete new', unknown_row['category_order'], len(re.split(r'\s*\+\s*', 'complete new')), 0
+    
+    for _, mapping_row in mapping_df[mapping_df['size'] == size].iterrows():
+        if mapping_row['category_group'] == 'unknown':
+            return 'unknown', 'complete new', mapping_row['category_order'], len(re.split(r'\s*\+\s*', 'complete new')), 0
+        
+        category_group = set(re.split(r'\s*\+\s*', mapping_row['category_group']))
+        target = len(re.split(r'\s*\+\s*', mapping_row['category_group']))
+        hit = len(set(re.split(r'\s*\+\s*', category)) & category_group)
+        if target == hit:
+            return mapping_row['category_group'], mapping_row['category_group_ordered'], mapping_row['category_order'], target, hit
+    
+    return 'unknown', 'complete new', 7, len(re.split(r'\s*\+\s*', 'complete new')), 0
+
+data_df[['category_group', 'category_group_ordered', 'category_order', 'target', 'hit']] = data_df.apply(lookup_category_group, axis=1, result_type='expand')
+
+
+
+# Function to look up values for each word in 'category_group_ordered'
+def lookup_category_group_ordered(row):
+    category_group_ordered = row['category_group_ordered']
+    
+    if category_group_ordered == 'complete new':
+        return [np.nan] * len(re.split(r'\s*\+\s*', 'complete new'))
+
+    animals_in_zoo = re.split(r'\s*\+\s*', row['animals_in_zoo'])
+
+    result_values = []
+    for word in re.split(r'\s*\+\s*', category_group_ordered):
+        matching_values = [mapping_dict.get(animal) for animal in animals_in_zoo if mapping_dict.get(animal) == word]
+        result_values.extend(matching_values)
+
+    # Ensure the result array has the same length as the expected columns
+    return result_values + [np.nan] * (len(re.split(r'\s*\+\s*', 'complete new')) - len(result_values))
+
+# Create new columns based on 'category_group_ordered'
+data_df = data_df.assign(**dict(zip(new_columns, data_df.apply(lookup_category_group_ordered, axis=1).apply(pd.Series).values.T)))
+
+
+
+
+# Calculate word count for 'animals_in_zoo' column
+data_df['animals_in_zoo_word_count'] = data_df['animals_in_zoo'].apply(lambda x: len(re.findall(r'\b\w+\b', str(x))) if (isinstance(x, str)) else 0)
+
+# Calculate word count for 'category' column
+data_df['category_word_count'] = data_df['category'].apply(lambda x: len(re.findall(r'\b\w+\b', str(x))))
+
+# Print the result
+print("Original DataFrame:")
+print(data_df[['size', 'animals_in_zoo', 'category', 'no_match_flag', 'category_group', 'category_group_ordered', 'category_order', 'target', 'hit']])
+print("\nDataFrame with No Match:")
+print(no_match_df[['size', 'animals_in_zoo']])
+
+
+
+
+
+
+
+
+
+
