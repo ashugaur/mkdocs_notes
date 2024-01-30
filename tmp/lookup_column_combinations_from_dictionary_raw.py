@@ -1730,6 +1730,9 @@ def lookup_category_group_order_old(row):
     # Ensure the result array has the same length as the expected columns
     return result_values if result_values else np.nan
 
+# Apply the function to get a single list of values
+data_df['new_columns_values_old'] = data_df.apply(lookup_category_group_order_old, axis=1)
+
 
 # Function to look up values for each word in 'category_group_order'
 def lookup_category_group_order(row):
@@ -1746,20 +1749,22 @@ def lookup_category_group_order(row):
     for word in re.split(r'\s*\+\s*', category_group_order):
         if not pd.isna(word):
             matching_values = next((_animal for _animal in _animals_in_zoo if mapping_dict.get(_animal) == word and word not in seen_words), None)
-            
             if matching_values is not None:
-                if row['override'] != 'no' and override_dict.get(matching_values) == 'yes':
-                    matching_values = 'something overridden'
-                    
                 seen_words.add(word)
-                result_values.append(matching_values)
+                if row['override'] != 'no' and override_dict.get(matching_values) == 'yes':
+                    result_values.append('something overridden')
+                else:
+                    result_values.append(matching_values)
+
+    # Apply mapping_dict to the result array
+    result_values = [mapping_dict.get(value, value) for value in result_values]
 
     # Ensure the result array has the same length as the expected columns
     return result_values if result_values else np.nan
 
 # Apply the function to get a single list of values
-data_df['new_columns_values_old'] = data_df.apply(lookup_category_group_order_old, axis=1)
 data_df['new_columns_values'] = data_df.apply(lookup_category_group_order, axis=1)
+
 
 # Calculate word count for 'animals_in_zoo' column
 data_df['animals_in_zoo_word_count'] = data_df['animals_in_zoo'].apply(lambda x: len(re.findall(r'\b\w+\b', str(x))) if (isinstance(x, str)) else 0)
