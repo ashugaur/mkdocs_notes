@@ -1709,7 +1709,7 @@ def lookup_category_group(row):
 data_df[['animals_combined', 'category_group_ordered', 'category_order', 'target', 'hit']] = data_df.apply(lookup_category_group, axis=1, result_type='expand')
 
 # Function to look up values for each word in 'category_group_order'
-def lookup_category_group_order_old(row):
+def lookup_category_group_order(row):
     category_group_order = row['animals_combined']
 
     if pd.isna(category_group_order) or category_group_order == 'complete new':
@@ -1730,12 +1730,8 @@ def lookup_category_group_order_old(row):
     # Ensure the result array has the same length as the expected columns
     return result_values if result_values else np.nan
 
-# Apply the function to get a single list of values
-data_df['new_columns_values_old'] = data_df.apply(lookup_category_group_order_old, axis=1)
-
-
 # Function to look up values for each word in 'category_group_order'
-def lookup_category_group_order(row):
+def lookup_category_group_order_addon(row):
     category_group_order = row['animals_combined']
 
     if pd.isna(category_group_order) or category_group_order == 'complete new':
@@ -1765,6 +1761,24 @@ def lookup_category_group_order(row):
 # Apply the function to get a single list of values
 data_df['new_columns_values'] = data_df.apply(lookup_category_group_order, axis=1)
 
+
+def apply_custom_logic(row):
+    result_values = []
+
+    for value in row['new_columns_values']:
+        if pd.notna(value):
+            if row['override'] != 'no' and override_dict.get(value, 'no') == 'yes':
+                result_values.append('custom substring')
+            else:
+                result_values.append(value)
+
+    return result_values if result_values else ['missing']
+
+# Apply the custom logic to create a new column 'new_columns_values_overridden'
+data_df['new_columns_values_overridden'] = data_df.apply(lambda row: apply_custom_logic(row) if isinstance(row['new_columns_values'], list) else ['missing'], axis=1)
+
+# Map the rest of the values using the mapping_dict
+data_df['new_columns_values_overridden'] = data_df['new_columns_values_overridden'].apply(lambda values: [mapping_dict.get(value, value) for value in values])
 
 # Calculate word count for 'animals_in_zoo' column
 data_df['animals_in_zoo_word_count'] = data_df['animals_in_zoo'].apply(lambda x: len(re.findall(r'\b\w+\b', str(x))) if (isinstance(x, str)) else 0)
@@ -1807,7 +1821,7 @@ def split_new_columns_values(df, prefix):
 result_df = split_new_columns_values(data_df, 'nc')
 
 
-
+""" old
 def split_and_map_column(df, column, prefix, key):
     # Split the specified column into a DataFrame of individual columns
     split_df = df[column].apply(pd.Series)
@@ -1822,8 +1836,26 @@ def split_and_map_column(df, column, prefix, key):
     result_df = pd.concat([df, split_df], axis=1)
 
     return result_df
+ """
 
-result_df = split_and_map_column(data_df, 'new_columns_values', 'nc', mapping_dict)
+def split_and_map_column(df, column, prefix, key=None):
+    # Split the specified column into a DataFrame of individual columns
+    split_df = df[column].apply(pd.Series)
+
+    # Apply the mapping dictionary to the split DataFrame if key is provided
+    if key is not None:
+        split_df = split_df.map(lambda x: key.get(x, x))
+
+    # Add prefix to column names
+    split_df.columns = [f'{prefix}_{i+1}' for i in range(split_df.shape[1])]
+
+    # Concatenate the split DataFrame with the original DataFrame
+    result_df = pd.concat([df, split_df], axis=1)
+
+    return result_df
+
+result_df = split_and_map_column(data_df, 'new_columns_values_overridden', 'nc')
+result_df = split_and_map_column(data_df, 'new_columns_values', 'animals', key=mapping_dict)
 
 # Print the result
 print("Original DataFrame:")
